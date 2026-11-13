@@ -70,3 +70,5 @@ for (const item of agenda) {
 }
 if (mudou) fs.writeFileSync(AGENDA, JSON.stringify(agenda, null, 2) + '\n');
 console.log(mudou ? 'agenda atualizada' : 'nada para publicar agora');
+// erro faz a execução falhar: o GitHub manda e-mail ao dono do repositório (ex.: token vencido)
+if (agenda.some((i) => i.erro && !i.publicado && Date.now() - Date.parse(i.erro.slice(0, 24)) < 20 * 60e3)) process.exitCode = 1;
